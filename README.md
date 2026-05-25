@@ -16,7 +16,7 @@ Abstract
 
 This is a small Command-Line Interface (CLI) for conveniently bridging
 an MCP chat tool to any OpenAI SDK compatible AI service API. It runs
-as a MCP stdio transport based server and remotely connects to the AI
+as an MCP stdio transport based server and remotely connects to the AI
 service API with the OpenAI SDK.
 
 Installation

@@ -100,11 +100,16 @@ const OPENAI_MODEL     = opts.openaiModel ?? fatal("OpenAI model required (use -
 const OPENAI_PROMPT    = opts.openaiPrompt
 const OPENAI_TIMEOUT   = opts.openaiTimeout
 
+/*  parse and validate the request timeout  */
+const timeoutMs = parseInt(OPENAI_TIMEOUT, 10)
+if (!Number.isFinite(timeoutMs) || timeoutMs <= 0)
+    fatal(`invalid OpenAI timeout "${OPENAI_TIMEOUT}" (use a positive integer of milliseconds)`)
+
 /*  establish the OpenAI SDK client  */
 const client = new OpenAI({
     baseURL: OPENAI_URL,
     apiKey:  OPENAI_KEY,
-    timeout: parseInt(OPENAI_TIMEOUT, 10)
+    timeout: timeoutMs
 })
 
 /*  establish the MCP server  */
@@ -123,13 +128,11 @@ server.registerTool(
             "Provide chat prompt in \"prompt\" parameter. " +
             "Receive chat response in \"text\" field.",
         inputSchema: {
-            prompt: z.string()
+            prompt: z.string().min(1)
                 .describe(`The prompt to send to ${SERVICE} AI service.`)
         }
     },
     async ({ prompt }) => {
-        if (!prompt)
-            throw new Error("prompt is required")
         try {
             let responseContent: string | null | undefined
             if (OPENAI_API === "responses") {
@@ -170,9 +173,9 @@ server.registerTool(
         catch (error: unknown) {
             /*  tunnel exception to MCP  */
             const err = error as
-                { response?: { data?: { error?: { message?: string } } }, message?: string }
+                { error?: { message?: string }, message?: string }
             const errorMessage =
-                err?.response?.data?.error?.message ??
+                err?.error?.message ??
                 err?.message ??
                 "unknown error occurred"
             process.stderr.write(`${pkg.name}: WARNING: chat completion error: ${errorMessage}\n`)
