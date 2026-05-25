@@ -13,25 +13,24 @@
     "repository":                    { "type": "git", "url":  "git+https://github.com/rse/upd.git" },
     "bugs":                          { "url":  "http://github.com/rse/upd/issues" },
     "bin": {
-        "mcp-to-openai":             "./mcp-to-openai.ts"
+        "mcp-to-openai":             "./dist/mcp-to-openai.js"
     },
     "type":                          "module",
     "dependencies": {
         "@dotenvx/dotenvx":                 "1.68.1",
         "@modelcontextprotocol/sdk":        "1.29.0",
+        "commander":                        "12.1.0",
         "openai":                           "6.39.0",
         "zod":                              "4.4.3"
     },
     "devDependencies": {
         "eslint":                           "9.39.4",
         "@eslint/js":                       "9.39.4",
-        "@typescript-eslint/parser":        "8.59.4",
-        "@typescript-eslint/eslint-plugin": "8.59.4",
+        "typescript-eslint":                "8.59.4",
         "eslint-plugin-promise":            "7.3.0",
         "eslint-plugin-import":             "2.32.0",
         "neostandard":                      "0.13.0",
         "globals":                          "17.6.0",
-        "typescript":                       "6.0.3",
         "@types/node":                      "25.9.1",
         "typescript":                       "6.0.3"
     },
@@ -39,7 +38,10 @@
         "node":                             ">=24.0.0"
     },
     "scripts": {
-        "prepublishOnly": "eslint --config eslint.mjs && tsc --noEmit --project tsconfig.json"
+        "lint":           "eslint --config eslint.mjs",
+        "build":          "tsc --project tsconfig.json",
+        "prepublishOnly": "npm run lint && npm run build",
+        "start":          "node dist/mcp-to-openai.js"
     },
     "files": [
         "dist",

@@ -10,10 +10,9 @@ import pluginImport  from "eslint-plugin-import"
 import pluginPromise from "eslint-plugin-promise"
 import pluginTS      from "typescript-eslint"
 import globals       from "globals"
-import parserTS      from "@typescript-eslint/parser"
 
 export default [
-    { ignores: [ "eslint.mjs" ] },
+    { ignores: [ "eslint.mjs", "dist" ] },
     pluginJs.configs.recommended,
     ...pluginTS.configs.strict,
     ...pluginTS.configs.stylistic,
@@ -29,7 +28,7 @@ export default [
         languageOptions: {
             ecmaVersion: 2024,
             sourceType:  "module",
-            parser: parserTS,
+            parser: pluginTS.parser,
             globals: {
                 ...globals.node
             }

@@ -7,6 +7,8 @@
 
 /*  built-in dependencies  */
 import process                  from "node:process"
+import { readFileSync }         from "node:fs"
+import { fileURLToPath }        from "node:url"
 
 /*  external dependencies  */
 import * as dotenvx             from "@dotenvx/dotenvx"
@@ -16,8 +18,12 @@ import { McpServer }            from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z }                    from "zod"
 
-/*  internal dependencies  */
-import pkg                      from "./package.json" with { type: "json" }
+/*  internal dependencies
+    (read package.json at run-time relative to this module, so it
+    resolves both when run as source and when run as compiled dist/ output)  */
+const pkg = JSON.parse(readFileSync(
+    fileURLToPath(new URL("../package.json", import.meta.url)), "utf8")) as
+    { name: string, version: string }
 
 /*  load potential .env file into the environment
     (optional, so stay silent if absent)  */
