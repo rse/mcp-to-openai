@@ -8,7 +8,8 @@ MCP-to-OpenAI
 <img src="https://nodei.co/npm/mcp-to-openai.png?downloads=true&stars=true" alt=""/>
 
 <p/>
-<img src="https://david-dm.org/rse/mcp-to-openai.png" alt=""/>
+[![github (author stars)](https://img.shields.io/github/stars/rse?logo=github&label=author%20stars&color=%233377aa)](https://github.com/rse)
+[![github (author followers)](https://img.shields.io/github/followers/rse?label=author%20followers&logo=github&color=%234477aa)](https://github.com/rse)
 
 Abstract
 --------
