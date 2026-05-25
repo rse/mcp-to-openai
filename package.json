@@ -13,7 +13,7 @@
     "repository":                    { "type": "git", "url":  "git+https://github.com/rse/upd.git" },
     "bugs":                          { "url":  "http://github.com/rse/upd/issues" },
     "bin": {
-        "mcp-to-openai":             "./dist/mcp-to-openai.js"
+        "mcp-to-openai":             "dist/mcp-to-openai.js"
     },
     "type":                          "module",
     "dependencies": {
@@ -39,7 +39,7 @@
     },
     "scripts": {
         "lint":           "eslint --config eslint.mjs",
-        "build":          "tsc --project tsconfig.json",
+        "build":          "tsc --project tsconfig.json && chmod +x dist/mcp-to-openai.js",
         "prepublishOnly": "npm run lint && npm run build",
         "start":          "node dist/mcp-to-openai.js"
     },
