@@ -18,7 +18,8 @@ This is a small Command-Line Interface (CLI) for conveniently bridging
 an MCP chat tool to any OpenAI SDK compatible AI service API. It runs
 as an MCP stdio transport based server and remotely connects to the AI
 service API with the OpenAI SDK. It supports both the legacy OpenAI
-Completion API and the modern OpenAI Responses API.
+Completion API and the modern OpenAI Responses API. It allows accessing
+foreign LLMs from within MCP host applications.
 
 Installation
 ------------
