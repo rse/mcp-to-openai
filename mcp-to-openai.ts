@@ -7,7 +7,7 @@
 
 /*  built-in dependencies  */
 import process                  from "node:process"
-import { readFileSync }         from "node:fs"
+import * as fs                  from "node:fs"
 import { fileURLToPath }        from "node:url"
 
 /*  external dependencies  */
@@ -21,8 +21,12 @@ import { z }                    from "zod"
 /*  internal dependencies
     (read package.json at run-time relative to this module, so it
     resolves both when run as source and when run as compiled dist/ output)  */
-const pkg = JSON.parse(readFileSync(
-    fileURLToPath(new URL("../package.json", import.meta.url)), "utf8")) as
+const pkgFile = [ "./package.json", "../package.json" ]
+    .map((rel)  => fileURLToPath(new URL(rel, import.meta.url)))
+    .find((path) => fs.existsSync(path))
+if (pkgFile === undefined)
+    throw new Error("cannot locate package.json")
+const pkg = JSON.parse(fs.readFileSync(pkgFile, "utf8")) as
     { name: string, version: string }
 
 /*  load potential .env file into the environment
